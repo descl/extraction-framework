@@ -26,6 +26,7 @@ do
 done
 
 # initializing the folder path where the downloaded files will be places
+
 path="$HOME/workspace/dump/$wiki"
 
 # making sure the folder exists, otherwise it will be created
@@ -48,15 +49,20 @@ done
 # downloading the specified files in the $path folder
 for i in "${files[@]}"
 do
-	echo -n "Downloading $i:"
+	echo "Downloading $i:"
 	wget "$i"
 done
 
 # extracting the files in the #path folder
-echo -n "Extracting file ${names[0]} , this will take several minutes" 
+# yes I know I could do it with less lines of code
+
+echo "Extracting file ${names[0]} , this will take several minutes" 
 bzip2 -d ${names[0]}
-for i in {1..${#names[@]}}
+
+i=1
+while [ $i -lt ${#names[@]} ]
 do
-	echo -n "Extracting files ${names[$i]}" 
+	echo "Extracting files  ${names[$i]}" 
 	gzip -d ${names[$i]}
+	let i=i+1
 done
